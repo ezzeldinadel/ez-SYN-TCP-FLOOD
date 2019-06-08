@@ -11,6 +11,9 @@ Options:
   --verbose             Addresses being spoofed [default: False].
   --very-verbose        Display everything [default: False].
 
+Attacks wil originate from an address that looks like this 150.150.150.X to make it easily detected and blocked. 
+X will go from 1 to 254. 
+
 """
 from docopt import docopt
 import logging

