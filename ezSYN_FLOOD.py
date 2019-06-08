@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 """
+Attacks wil originate from an address that looks like this 150.150.150.X to make it easily detected and blocked. 
+X will go from 1 to 254. 
+
 Usage:
   ezSYN_FLOOD.py <dst_ip> <dst_port> [--sleep=<sec>] [--verbose] [--very-verbose]
 Options:
@@ -19,7 +22,7 @@ from scapy.all import *
 
 
 def main(arguments):
-    src_net = "192.168.250."
+    src_net = "150.150.150."
     dst_ip = arguments["<dst_ip>"]
     dst_port = int(arguments["<dst_port>"])
     sleep = int(arguments["--sleep"])
