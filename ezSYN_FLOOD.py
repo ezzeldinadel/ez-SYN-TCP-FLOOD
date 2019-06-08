@@ -1,16 +1,16 @@
-#!/usr/bin/env python3
 
-"""
-Attacks wil originate from an address that looks like this 150.150.150.X to make it easily detected and blocked. 
-X will go from 1 to 254. 
+"""ezSYN FLOOD.
+
 Usage:
   ezSYN_FLOOD.py <dst_ip> <dst_port> [--sleep=<sec>] [--verbose] [--very-verbose]
+
 Options:
-  -h, --help            Show options
-  --version             Version
-  --sleep=<seconds>     Seconds to sleep between shots [default: 0]
-  --verbose             Addresses being spoofed [default: False]
-  --very-verbose        Display everything [default: False]
+  -h, --help            Show options.
+  --version             Version.
+  --sleep=<seconds>     Seconds to sleep between shots [default: 0].
+  --verbose             Addresses being spoofed [default: False].
+  --very-verbose        Display everything [default: False].
+
 """
 from docopt import docopt
 import logging
@@ -56,6 +56,7 @@ def main(arguments):
 
     print("[+] Flooding done.")
 
+
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version="ezSYN_FLOOD v1.0")
+    arguments = docopt(__doc__, version='ezSYN FLOOD 1.0')
     main(arguments)
