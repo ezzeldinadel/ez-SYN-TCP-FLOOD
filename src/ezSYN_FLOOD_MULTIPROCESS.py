@@ -1,4 +1,4 @@
-""" ezSYN FLOOD MULTIPROCESS. 
+""" ezSYN FLOOD MULTIPROCESS.
 
 Usage:
   ezSYN_FLOOD_MULTIPROCESS.py <dst_ip> <dst_port> [--workers=<amount>] [--sleep=<seconds>]
@@ -9,8 +9,8 @@ Options:
   --workers=<amount>    How many processes to fire [default: 4].
   --sleep=<seconds>     How many seconds to sleep between shots [default: 0].
 
-Workers will have addresses looking like 15.15.X.Y 
-X will be the number of the worker so worker number 1 will be firing from 15.15.1.Y 
+Workers will have addresses looking like 15.15.X.Y
+X will be the number of the worker so worker number 1 will be firing from 15.15.1.Y
 Y will be iterating from 1 to 254 so every workers fires around 250 shots fro 250 different addresses all in the same range (to be easily detected as a test)
 If you wish to use a better spoofing mechanism please make sure the source ip address (15.15.X.Y) is completely randomly generated or sourced from actual top 3000 websites (alexa)
 
@@ -55,7 +55,7 @@ def main(arguments):
     dst_port = int(arguments["<dst_port>"])
     workers = int(arguments["--workers"])
     sleep = int(arguments["--sleep"])
-    
+
     signal.signal(signal.SIGINT, signal_handler)
 
     if workers < 1:
@@ -76,7 +76,7 @@ def main(arguments):
     for process in processes:
         if process is not None:
             process.join()
-            
+
 
 
 if __name__ == "__main__":

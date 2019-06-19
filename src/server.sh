@@ -4,12 +4,12 @@ mkdir -p out
 
 cd out
 
-port=8001
+port="$1"
 
 if [[ -z ${1+x} ]]
 then
-    port="$1"
+    port=8001
 fi
 
-python -m SimpleHTTPServer $port
+python -m http.server $port
 
