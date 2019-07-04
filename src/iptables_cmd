@@ -1,0 +1,1 @@
+ iptables -A OUTPUT -d 54.239.19.238/32 -p tcp -m tcp --dport 80 --tcp-flags RST RST -j DROP 

