@@ -35,7 +35,6 @@ def _sr1(pkt, dport):
   send(pkt)
   dporrt=str(dport)
   ans = sniff(filter="tcp port %s"%dporrt,lfilter=self.match_packet,count=1,timeout=1)
-  print (ans[0] )
   return ans[0] if ans else None
 
 def main(arguments):
@@ -54,7 +53,7 @@ def main(arguments):
     print("# Shooting at: {dst_ip}".format(dst_ip=dst_ip))
     print("###########################################\n")
     for src_host in range(1,254):
-        _sip = str(src_host )
+         _sip = str(src_host )
         if verbose or very_verbose:
             print("[*] We are sending spoofed SYN packets from {src_net}{src_host}".format(src_net=src_net,src_host=src_host))
             print("--------------------------------------------")
@@ -70,9 +69,8 @@ def main(arguments):
             transport_layer = TCP(sport=src_port, dport=dst_port, flags="S")
 
             # Send the packet
-            send(network_layer/transport_layer, verbose=False)
-#            r=sr1(network_layer/transport_layer,dst_port)
-#            print(r)
+         #   send(network_layer/transport_layer, verbose=False)
+            sr1(network_layer/transport_layer,dst_port)
 
             if sleep != 0:
                 time.sleep(sleep)
