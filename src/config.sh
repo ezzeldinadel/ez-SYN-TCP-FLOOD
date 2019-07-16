@@ -10,5 +10,5 @@ SERVER_PORT=8001
 
 SLEEP_TIME=0
 
-SERVE_DIR=out
+export SERVE_DIR=out
 
