@@ -1,8 +1,12 @@
 #!/bin/bash
 
-mkdir -p out
+DIR=$(dirname $0)
 
-cd out
+. $DIR/config.sh
+
+mkdir -p $SERVE_DIR
+
+cd $SERVE_DIR
 
 port="$1"
 
