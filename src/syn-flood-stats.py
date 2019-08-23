@@ -89,7 +89,7 @@ def _writer_thread(interval, ctx):
 
         time.sleep(interval)
 
-        logger.info("writing stats to file")
+        logger.info(f"writing stats to file (syn={ctx.total_syn_count} ack={ctx.total_ack_count})")
 
         with open(out_path, "w") as f, ctx.ack_lock, ctx.syn_lock:
             f.write(json.dumps({
