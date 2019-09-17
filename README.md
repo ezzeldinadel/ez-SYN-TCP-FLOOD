@@ -13,7 +13,7 @@ alert tcp any any -> $HOME_NET any (flags: S; msg:"Possible TCP SYN Flood"; flow
 
 
 
-### Catch the flooding 
+### Catch the flooding in an IPS setting 
 
 Rules
 
